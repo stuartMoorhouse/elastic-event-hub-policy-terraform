@@ -1,0 +1,224 @@
+{
+  "package": {
+    "name": "azure",
+    "version": "1.28.1"
+  },
+  "name": "azure-1",
+  "namespace": "",
+  "description": "",
+  "policy_ids": [
+    "POLICY_ID_PLACEHOLDER"
+  ],
+  "vars": {
+    "eventhub": "sm-test-event-hub",
+    "consumer_group": "$Default",
+    "connection_string": {
+      "id": "SECRET_ID_PLACEHOLDER",
+      "isSecretRef": true
+    },
+    "storage_account": "smtesteventhubstorage",
+    "storage_account_key": {
+      "id": "SECRET_ID_PLACEHOLDER",
+      "isSecretRef": true
+    }
+  },
+  "inputs": {
+    "events-azure-eventhub": {
+      "enabled": false,
+      "streams": {
+        "azure.events": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-eventhub",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false,
+            "processor_version": "v1",
+            "processor_update_interval": "10s",
+            "processor_start_position": "earliest",
+            "migrate_checkpoint": false,
+            "partition_receive_timeout": "5s",
+            "partition_receive_count": 100
+          }
+        }
+      }
+    },
+    "eventhub-azure-eventhub": {
+      "enabled": true,
+      "streams": {
+        "azure.eventhub": {
+          "enabled": true,
+          "vars": {
+            "parse_message": false,
+            "preserve_original_event": false,
+            "data_stream.dataset": "azure.eventhub",
+            "tags": [
+              "azure-eventhub",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        }
+      }
+    },
+    "adlogs-azure-eventhub": {
+      "enabled": false,
+      "streams": {
+        "azure.auditlogs": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-auditlogs",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        },
+        "azure.identity_protection": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-identity-protection-logs",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        },
+        "azure.provisioning": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-provisioning-logs",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        },
+        "azure.signinlogs": {
+          "enabled": false,
+          "vars": {
+            "tags": [
+              "azure-signinlogs",
+              "forwarded"
+            ],
+            "preserve_original_event": false,
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        }
+      }
+    },
+    "platformlogs-azure-eventhub": {
+      "enabled": false,
+      "streams": {
+        "azure.platformlogs": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-platformlogs",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        }
+      }
+    },
+    "activitylogs-azure-eventhub": {
+      "enabled": false,
+      "streams": {
+        "azure.activitylogs": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-activitylogs",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        }
+      }
+    },
+    "graphactivitylogs-azure-eventhub": {
+      "enabled": false,
+      "streams": {
+        "azure.graphactivitylogs": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-graphactivitylogs",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        }
+      }
+    },
+    "springcloudlogs-azure-eventhub": {
+      "enabled": false,
+      "streams": {
+        "azure.springcloudlogs": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-springcloudlogs",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        }
+      }
+    },
+    "firewall_logs-azure-eventhub": {
+      "enabled": false,
+      "streams": {
+        "azure.firewall_logs": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-firewall",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        }
+      }
+    },
+    "application_gateway-azure-eventhub": {
+      "enabled": false,
+      "streams": {
+        "azure.application_gateway": {
+          "enabled": false,
+          "vars": {
+            "preserve_original_event": false,
+            "tags": [
+              "azure-application-gateway-logs",
+              "forwarded"
+            ],
+            "sanitize_newlines": false,
+            "sanitize_singlequotes": false
+          }
+        }
+      }
+    }
+  }
+}
