@@ -3,6 +3,10 @@
 !*.tfvars.example
 .terraform/
 terraform.tfstate*
+.terraform.lock.hcl
 
 # Claude
 .claude/
+
+# Script outputs
+script/input.txt

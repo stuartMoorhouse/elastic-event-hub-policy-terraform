@@ -42,9 +42,10 @@ terraform destroy
 
 ## API Call Transformation
 
-The `api-transform.py` script converts Fleet API calls (captured from Kibana's network inspector) into Terraform HCL format. This is useful when you've configured an integration in the Kibana UI and want to recreate it as infrastructure-as-code.
+The `script/api-transform.py` script converts Fleet API calls (captured from Kibana's network inspector) into Terraform HCL format. This is useful when you've configured an integration in the Kibana UI and want to recreate it as infrastructure-as-code.
 
 ```bash
+cd script
 # Place your API call JSON in api-call.json
 python3 api-transform.py
 ```
@@ -53,12 +54,17 @@ The script handles the translation of Kibana's JSON structure to Terraform's HCL
 
 ## Files
 
+### Terraform Configuration
 - `elastic-policy-integration.tf` - Main integration policy configuration
 - `providers.tf` - Provider configuration
 - `variables.tf` - Variable definitions
 - `outputs.tf` - Output values
 - `versions.tf` - Version constraints
-- `api-transform.py` - Utility to transform API calls to Terraform
+- `terraform.tfvars.example` - Example variables file
+
+### Script Directory
+- `script/api-transform.py` - Utility to transform API calls to Terraform
+- `script/api-call.json` - Example API call from Kibana (sanitized)
 
 ## Security Notes
 
