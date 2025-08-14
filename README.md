@@ -1,6 +1,6 @@
 # Elastic Event Hub Policy Terraform
 
-This Terraform configuration creates an Azure Event Hub integration in Elastic Fleet.
+This repo contains Terraform configuration to set up Azure Event Hub log ingestion in Elastic Fleet. It automates the creation of agent policies and integration policies that would normally be configured manually through Kibana.
 
 ## Prerequisites
 
@@ -42,14 +42,14 @@ terraform destroy
 
 ## API Call Transformation
 
-The `api-transform.py` script can convert Elastic Fleet API calls to Terraform configuration:
+The `api-transform.py` script converts Fleet API calls (captured from Kibana's network inspector) into Terraform HCL format. This is useful when you've configured an integration in the Kibana UI and want to recreate it as infrastructure-as-code.
 
 ```bash
-# Place your API call in api-call.json
+# Place your API call JSON in api-call.json
 python3 api-transform.py
 ```
 
-This will generate the input blocks needed for the Terraform configuration.
+The script handles the translation of Kibana's JSON structure to Terraform's HCL syntax, including proper handling of secrets and variable references.
 
 ## Files
 
