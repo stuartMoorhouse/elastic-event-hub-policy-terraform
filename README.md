@@ -1,6 +1,6 @@
 # Elastic Event Hub Policy Terraform
 
-This repo contains Terraform configuration to set up Azure Event Hub log ingestion in Elastic Fleet. It automates the creation of agent policies and integration policies that would normally be configured manually through Kibana.
+This repo contains Terraform scripts to set up an Azure Event Hub Integration in Elastic Fleet. It creates an Agent Policy, which contains the Event Hub Integration.
 
 ## Prerequisites
 
@@ -20,9 +20,9 @@ cp terraform.tfvars.example terraform.tfvars
 - `storage_account`: Azure storage account name for checkpointing
 - `connection_string`: Event Hub connection string
 - `storage_account_key`: Storage account access key
-- `elasticsearch_api_key`: Base64-encoded Elasticsearch API key
-- `elasticsearch_endpoints`: Elasticsearch cluster endpoint
-- `fleet_endpoint`: Fleet/Kibana endpoint
+- `elasticsearch_api_key`: Elasticsearch API key
+- `elasticsearch_endpoints`: Elasticsearch endpoint
+- `fleet_endpoint`: Fleet endpoint
 
 ## Usage
 
@@ -42,7 +42,7 @@ terraform destroy
 
 ## API Call Transformation
 
-The `script/api-transform.py` script converts Fleet API calls (captured from Kibana's network inspector) into Terraform HCL format. This is useful when you've configured an integration in the Kibana UI and want to recreate it as infrastructure-as-code.
+The `script/api-transform.py` script converts Fleet API calls (shown in the Kibana UI) into Terraform HCL format. This is useful when you've configured an integration in the Kibana UI and want to recreate it as infrastructure-as-code.
 
 ```bash
 cd script
@@ -65,12 +65,6 @@ The script handles the translation of Kibana's JSON structure to Terraform's HCL
 ### Script Directory
 - `script/api-transform.py` - Utility to transform API calls to Terraform
 - `script/api-call.json` - Example API call from Kibana (sanitized)
-
-## Security Notes
-
-- Never commit `terraform.tfvars` with real credentials
-- Use environment variables or secure secret management for production
-- The `.gitignore` file is configured to exclude sensitive files
 
 ## Known Issues
 
