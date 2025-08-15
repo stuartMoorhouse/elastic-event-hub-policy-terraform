@@ -71,4 +71,4 @@ Error: Provider produced inconsistent result after apply
 
 ## State Management
 
-Sensitive values in `terraform.tfvars` are stored in the Terraform state file. Use a remote backend with encryption and appropriate access controls. See [Terraform documentation on sensitive data](https://developer.hashicorp.com/terraform/language/state/sensitive-data) for standard practices.
+Sensitive values in `terraform.tfvars` are stored in the Terraform state file. Consider using a remote backend with encryption and appropriate access controls. See [Terraform documentation on sensitive data](https://developer.hashicorp.com/terraform/language/state/sensitive-data) for standard practices.
