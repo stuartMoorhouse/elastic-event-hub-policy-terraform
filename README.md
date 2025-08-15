@@ -51,7 +51,7 @@ terraform destroy
 
 ## Security Notes
 
-### ⚠️ Important: Secrets in Terraform State
+### Important: Secrets in Terraform State
 
 The Elastic Terraform provider currently stores secrets (connection strings, storage account keys) in **plain text** in the Terraform state file, even though they are properly secured in Elasticsearch/Kibana. This is a known limitation tracked in [GitHub Issue #689](https://github.com/elastic/terraform-provider-elasticstack/issues/689) and [Issue #1232](https://github.com/elastic/terraform-provider-elasticstack/issues/1232).
 
@@ -67,12 +67,18 @@ The Elastic Terraform provider currently stores secrets (connection strings, sto
 - Never commit `terraform.tfstate` files to version control
 - Consider using external secret management systems where possible
 
-### General Security Best Practices
-
-- Never commit `terraform.tfvars` with real credentials
-- The `.gitignore` file is configured to exclude sensitive files
-
 ## Known Issues
 
-- The Terraform provider may report "block count changed" errors when creating the Azure integration, but resources are created successfully
-- The integration appears as "Azure Logs" in the UI because Event Hub is part of the broader Azure integration package
+### "Block count changed" error
+
+When applying the Terraform configuration, you'll see an error like:
+```
+Error: Provider produced inconsistent result after apply
+.input: block count changed from 1 to 9
+```
+
+**What's happening**: The Azure integration in Fleet automatically creates all 9 available input types (eventhub, platformlogs, activitylogs, graphactivitylogs, springcloudlogs, events, adlogs, firewall_logs, application_gateway) even when you only define one in Terraform. The Terraform provider sees this as unexpected behavior and reports an error.
+
+**Impact**: Despite the error message, the resources ARE created successfully and work correctly. This is a cosmetic issue with the provider, not a functional problem.
+
+**Status**: This is a known bug tracked in [GitHub Issue #1078](https://github.com/elastic/terraform-provider-elasticstack/issues/1078)
