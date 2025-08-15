@@ -49,25 +49,11 @@ terraform destroy
 - `versions.tf` - Version constraints
 - `terraform.tfvars.example` - Example variables file
 
-## Security Notes
-
-### Important: Secrets in Terraform State
-
-The Elastic Terraform provider currently stores secrets (connection strings, storage account keys) in **plain text** in the Terraform state file, even though they are properly secured in Elasticsearch/Kibana. This is a known limitation tracked in [GitHub Issue #689](https://github.com/elastic/terraform-provider-elasticstack/issues/689) and [Issue #1232](https://github.com/elastic/terraform-provider-elasticstack/issues/1232).
-
-**What happens:**
-1. Terraform sends plain text secrets to the Fleet API
-2. Fleet API creates secure secret references in Elasticsearch
-3. Secrets are properly hidden in Kibana UI
-4. BUT Terraform state file contains the secrets in plain text
-
-**Recommendations:**
-- Use a remote backend with encryption (e.g., S3 with SSE-KMS, Azure Storage with encryption)
-- Restrict access to state files using IAM/RBAC
-- Never commit `terraform.tfstate` files to version control
-- Consider using external secret management systems where possible
-
 ## Known Issues
+
+### Configuration Drift with Secret References
+
+When Terraform manages Fleet integration policies, you may experience configuration drift on subsequent applies. This occurs because Fleet transforms plain text secrets into secure references (e.g., `{"id": "xxx", "isSecretRef": true}`), which differs from the original Terraform configuration. This behavior is tracked in [GitHub Issue #689](https://github.com/elastic/terraform-provider-elasticstack/issues/689).
 
 ### "Block count changed" error
 
@@ -82,3 +68,7 @@ Error: Provider produced inconsistent result after apply
 **Impact**: Despite the error message, the resources ARE created successfully and work correctly. This is a cosmetic issue with the provider, not a functional problem.
 
 **Status**: This is a known bug tracked in [GitHub Issue #1078](https://github.com/elastic/terraform-provider-elasticstack/issues/1078)
+
+## State Management
+
+Sensitive values in `terraform.tfvars` are stored in the Terraform state file. Use a remote backend with encryption and appropriate access controls. See [Terraform documentation on sensitive data](https://developer.hashicorp.com/terraform/language/state/sensitive-data) for standard practices.
