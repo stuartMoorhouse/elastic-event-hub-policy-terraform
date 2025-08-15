@@ -7,6 +7,3 @@ terraform.tfstate*
 
 # Claude
 .claude/
-
-# Script outputs
-script/input.txt
